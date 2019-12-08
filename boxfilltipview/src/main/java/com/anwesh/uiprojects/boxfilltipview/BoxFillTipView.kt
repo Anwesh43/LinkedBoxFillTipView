@@ -209,4 +209,13 @@ class BoxFillTipView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BoxFillTipView {
+            val view : BoxFillTipView = BoxFillTipView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
