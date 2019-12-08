@@ -28,29 +28,29 @@ fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 
 fun Canvas.drawBoxFillTip(size : Float, scale : Float, paint : Paint) {
-    val sf : Float = scale.sinify()
+    val sf : Float = scale.divideScale(0, 2).sinify()
     val tipSize : Float = size / tipSizeFactor
     save()
     translate(0f, -(size - tipSize) * sf)
     paint.style = Paint.Style.FILL
-    drawRect(RectF(-tipSize / 2, -tipSize / 2, tipSize / 2, tipSize / 2), paint)
+    drawRect(RectF(-tipSize / 2, -tipSize, tipSize / 2, 0f), paint)
     restore()
     paint.style = Paint.Style.STROKE
     drawRect(RectF(-size / 2, 0f, size / 2, size), paint)
     paint.style = Paint.Style.FILL
-    drawRect(RectF(-size / 2, 0f, size / 2, size * scale), paint)
+    drawRect(RectF(-size / 2, 0f, size / 2, size * scale.divideScale(1, 2)), paint)
 }
 
 fun Canvas.drawBFTNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
-    val gap : Float = w / (nodes + 1)
+    val gap : Float = h / (nodes + 1)
     val size : Float = gap / sizeFactor
     paint.color = foreColor
     paint.strokeCap = Paint.Cap.ROUND
     paint.strokeWidth = Math.min(w, h) / strokeFactor
     save()
-    translate(gap * (i + 1), h / 2)
+    translate(w / 2, gap * (i + 1))
     drawBoxFillTip(size, scale, paint)
     restore()
 }
